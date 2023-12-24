@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/getproduct', methods=['GET'])
 def respond():
     # Retrieve the name from the url parameter ?name=
-    name = request.args.get("product", None)
+    product = request.args.get("product", None)
 
     # For debugging
     print(f"Received: {product}")
@@ -27,12 +27,12 @@ def respond():
 
 @app.route('/post/', methods=['POST'])
 def post_something():
-    param = request.form.get('name')
+    param = request.form.get('product')
     print(param)
     # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
     if param:
         return jsonify({
-            "Message": f"Welcome {name} to our awesome APIS!",
+            "Message": f"Welcome {product} to our awesome APIS!",
             # Add this option to distinct the POST request
             "METHOD": "POST"
         })
