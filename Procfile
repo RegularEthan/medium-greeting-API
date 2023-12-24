@@ -1,2 +1,2 @@
 web: gunicorn Howdy:app
-web: python Howdy.py
+web: python Howdy:app
