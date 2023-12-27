@@ -21,46 +21,27 @@ driver = webdriver.Chrome(options=chrome_options)
 page_index = 1
 page_items = {}
 
-@app.route('/getproduct', methods=['GET'])
+@app.route('/getmsg', methods=['GET'])
 def respond():
-
-    product = request.args.get("product", None)
-    
-    global page_index
-
-    page_number = '&PageNumber=' + str(page_index)
-
-    url = 'https://www.woolworths.com.au/shop/search/products?searchTerm=' + product + page_number
-
-    driver.get(url)
-
-    # driver.set_page_load_timeout(50)
-
-    WebDriverWait(driver, 2).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "product-tile-title"))
-    )
-
-    buildItemList()
-    
     # Retrieve the name from the url parameter ?name=
-    # 
+    name = request.args.get("name", None)
 
-    # # For debugging
-    # print(f"Received: {product}")
+    # For debugging
+    print(f"Received: {name}")
 
-    # response = {}
+    response = {}
 
-    # # Check if the user sent a name at all
-    # if not product:
-    #     response["ERROR"] = "No name found. Please send a name."
-    # # Check if the user entered a number
-    # elif str(product).isdigit():
-    #     response["ERROR"] = "The name can't be numeric. Please send a string."
-    # else:
-    #     response["MESSAGE"] = f"Welcome {product} to our awesome API!"
+    # Check if the user sent a name at all
+    if not name:
+        response["ERROR"] = "No name found. Please send a name."
+    # Check if the user entered a number
+    elif str(name).isdigit():
+        response["ERROR"] = "The name can't be numeric. Please send a string."
+    else:
+        response["MESSAGE"] = f"Welcome {name} to our awesome API!"
 
-    # # Return the response in json format
-    # return jsonify(response)
+    # Return the response in json format
+    return jsonify(response)
 
 @app.route('/post/', methods=['POST'])
 def post_something():
